@@ -2,14 +2,14 @@
 
 import argparse
 from flask import Flask
-from views import price_processor
+from views.price_processor import prices
 
 
 # Create the Flask app
 app = Flask(__name__)
 
 # Register Blueprint views
-app.register_blueprint(price_processor, url_prefix='/price')
+app.register_blueprint(prices, url_prefix='/prices')
 
 # Start the Flask app if script is executed
 if __name__ == '__main__':
