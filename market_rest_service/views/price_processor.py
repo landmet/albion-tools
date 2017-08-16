@@ -28,6 +28,7 @@ def marketorders():
                 pass
             else:
                 # TODO: Use Localization data to add friendly names
+                # TODO: Add location ID to each index, along with friendly name
                 order['timestamp'] = datetime.utcnow().replace(tzinfo=timezone.utc)
                 order['UnitPriceSilver'] = order['UnitPriceSilver'] / 1000
                 es.index(index="albion_market", doc_type="market_order", body=order)
@@ -39,6 +40,7 @@ def marketorders():
 
 @prices.route('/goldprices', methods=["POST"])
 def goldprices():
+    # TODO: Store gold prices
     try:
         content = request.get_json()
         # pprint.pprint(content)
