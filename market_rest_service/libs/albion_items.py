@@ -9,7 +9,7 @@ def build_localization_lookup(lang='EN-US'):
     """
     loc_dict = {}
 
-    loc_tree = ET.parse('game_data/localization.xml')
+    loc_tree = ET.parse('libs/game_data/localization.xml')
     loc_root = loc_tree.getroot()
 
     # TODO: This [0] reference might cause a bug, find a cleaner way
@@ -44,7 +44,7 @@ def build_item_lookup(localization_dictionary):
     Creates a dictionary of items with the localization provided.
     :return: dictionary of items
     """
-    item_xml = ET.parse('game_data/items.xml')
+    item_xml = ET.parse('libs/game_data/items.xml')
     item_root = item_xml.getroot()
     items = item_root.getchildren()
 

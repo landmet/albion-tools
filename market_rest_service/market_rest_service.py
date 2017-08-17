@@ -9,7 +9,7 @@ from views.price_processor import prices
 app = Flask(__name__)
 
 # Register Blueprint views
-app.register_blueprint(prices, url_prefix='/prices')
+app.register_blueprint(prices, url_prefix='')
 
 # Start the Flask app if script is executed
 if __name__ == '__main__':
