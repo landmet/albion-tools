@@ -2,43 +2,6 @@ import xml.etree.ElementTree as ET
 import traceback
 
 
-def build_localization_lookup(lang='EN-US'):
-    """
-    Takes the localization XML and builds a lookup dictionary for the language given
-    :return: dictionary of {itemID:localized name}
-    """
-    loc_dict = {}
-
-    loc_tree = ET.parse('libs/game_data/localization.xml')
-    loc_root = loc_tree.getroot()
-
-    # TODO: This [0] reference might cause a bug, find a cleaner way
-    loc_items = loc_root.getchildren()[0]
-
-    for item in loc_items:
-        try:
-            # Get the item ID string
-            item_id = item.attrib['tuid']
-
-            # Get the target lang for localization
-            for loc_str in item:
-                if loc_str.attrib['{http://www.w3.org/XML/1998/namespace}lang'] == lang:
-                    localized = loc_str.find('seg').text
-
-                    if localized is not None:
-                        loc_dict[item_id] = localized
-                    else:
-                        loc_dict[item_id] = item_id
-                    break
-                else:
-                    loc_dict[item_id] = item_id
-
-        except:
-            print(traceback.format_exc())
-
-    return loc_dict
-
-
 def build_item_lookup(localization_dictionary):
     """
     Creates a dictionary of items with the localization provided.
@@ -119,4 +82,48 @@ def build_item_lookup(localization_dictionary):
     In [39]: c.getchildren()[0].attrib
     Out[39]: {'count': '32', 'uniquename': 'T2_PLANKS'}
 
+    """
+
+
+def build_localization_lookup(lang='EN-US'):
+    """
+    Takes the localization XML and builds a lookup dictionary for the language given
+    :return: dictionary of {itemID:localized name}
+    """
+    loc_dict = {}
+
+    loc_tree = ET.parse('libs/game_data/localization.xml')
+    loc_root = loc_tree.getroot()
+
+    # TODO: This [0] reference might cause a bug, find a cleaner way
+    loc_items = loc_root.getchildren()[0]
+
+    for item in loc_items:
+        try:
+            # Get the item ID string
+            item_id = item.attrib['tuid']
+
+            # Get the target lang for localization
+            for loc_str in item:
+                if loc_str.attrib['{http://www.w3.org/XML/1998/namespace}lang'] == lang:
+                    localized = loc_str.find('seg').text
+
+                    if localized is not None:
+                        loc_dict[item_id] = localized
+                    else:
+                        loc_dict[item_id] = item_id
+                    break
+                else:
+                    loc_dict[item_id] = item_id
+
+        except:
+            print(traceback.format_exc())
+
+    return loc_dict
+
+
+def get_crafting_requirements():
+    """
+    Returns what items are required for crafting the given ITEM ID
+    :return:
     """
