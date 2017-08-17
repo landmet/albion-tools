@@ -20,4 +20,4 @@ if __name__ == '__main__':
     if args.dev:
         app.run(host="0.0.0.0", port=8000, debug=True)
     else:
-        app.run(host="0.0.0.0", port=8000, debug=True)
+        app.run(host="0.0.0.0", port=12345, debug=False)
