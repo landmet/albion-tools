@@ -2,6 +2,34 @@ import xml.etree.ElementTree as ET
 import traceback
 
 
+def build_crafting_lookup():
+    # TODO: Keep working on this, I think only one ingredient is in the list currently.
+    """
+    Returns a crafting lookup table
+    :return:
+    """
+    crafting_dict = {}
+
+    itemtree = ET.parse('libs/game_data/items.xml')
+    itemroot = itemtree.getroot()
+
+    for item in itemroot.getchildren():
+        # Check if item is craftable
+        crafting_requirements = item.findall('craftingrequirements')
+        print(item.attrib['uniquename'])
+
+        # If this is greater than 0, there's items that can craft into this item
+        if len(crafting_requirements) > 0:
+            recipes = []
+            for recipe in crafting_requirements:
+                recipe_dict = {}
+                for ingredient in recipe.getchildren():
+                    recipe_dict['uniquename'] = ingredient.attrib['uniquename']
+                    recipe_dict['count'] = ingredient.attrib['count']
+                recipes.append(recipe_dict)
+            print(recipes)
+
+
 def build_item_lookup(localization_dictionary):
     """
     Creates a dictionary of items with the localization provided.
@@ -120,10 +148,3 @@ def build_localization_lookup(lang='EN-US'):
             print(traceback.format_exc())
 
     return loc_dict
-
-
-def get_crafting_requirements():
-    """
-    Returns what items are required for crafting the given ITEM ID
-    :return:
-    """
